@@ -1,8 +1,8 @@
 import { Types } from 'mongoose'
 
 type IProperty = {
-  _id?: string
-  owner: string
+  _id?: Types.ObjectId
+  owner: Types.ObjectId
   name: string
   type: string
   description: string
@@ -33,6 +33,7 @@ type IProperty = {
 }
 
 type IUser = {
+  _id: Types.ObjectId
   email: string | undefined
   username: string
   image: string
