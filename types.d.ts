@@ -1,6 +1,6 @@
 import { Types } from 'mongoose'
 
-type Property = {
+type IProperty = {
   _id?: string
   owner: string
   name: string
