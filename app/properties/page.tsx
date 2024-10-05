@@ -8,7 +8,7 @@ const PropertiesPage = () => {
         {!properties.length ? (
           <p>No properties available</p>
         ) : (
-          <div className='grid gird-cols-1 md:grid-cols-3 gap-6'>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
             {properties.map((property) => {
               const { _id } = property
 
