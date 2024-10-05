@@ -1,4 +1,7 @@
+import Link from 'next/link'
 import Image from 'next/image'
+
+import { FaGoogle } from 'react-icons/fa'
 import profileDefault from '@/assets/images/profile.png'
 import logo from '@/assets/images/logo-white.png'
 
@@ -37,35 +40,35 @@ const Navbar = () => {
 
           <div className='flex flex-1 items-center justify-center md:items-stretch md:justify-start'>
             {/* <!-- Logo --> */}
-            <a className='flex flex-shrink-0 items-center' href='/'>
+            <Link className='flex flex-shrink-0 items-center' href='/'>
               <Image className='h-10 w-auto' src={logo} alt='Nest' />
 
               <span className='hidden md:block text-white text-2xl font-bold ml-2'>
                 Nest
               </span>
-            </a>
+            </Link>
 
             {/* <!-- Desktop Menu Hidden below md screens --> */}
             <div className='hidden md:ml-6 md:block'>
               <div className='flex space-x-2'>
-                <a
+                <Link
                   href='/'
                   className='text-white bg-black hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
                 >
                   Home
-                </a>
-                <a
-                  href='/properties.html'
+                </Link>
+                <Link
+                  href='/properties'
                   className='text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
                 >
                   Properties
-                </a>
-                <a
-                  href='/add-property.html'
+                </Link>
+                <Link
+                  href='/properties/add'
                   className='text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
                 >
                   Add Property
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -74,7 +77,7 @@ const Navbar = () => {
           <div className='hidden md:block md:ml-6'>
             <div className='flex items-center'>
               <button className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'>
-                <i className='fa-brands fa-google text-white mr-2'></i>
+                <FaGoogle className='text-white mr-2' />
                 <span>Login or Register</span>
               </button>
             </div>
@@ -82,7 +85,7 @@ const Navbar = () => {
 
           {/* <!-- Right Side Menu (Logged In) --> */}
           <div className='absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0'>
-            <a href='messages.html' className='relative group'>
+            <Link href='/messages' className='relative group'>
               <button
                 type='button'
                 className='relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
@@ -108,7 +111,7 @@ const Navbar = () => {
                 2
                 {/* <!-- Replace with the actual number of notifications --> */}
               </span>
-            </a>
+            </Link>
             {/* <!-- Profile dropdown button --> */}
             <div className='relative ml-3'>
               <div>
@@ -138,24 +141,24 @@ const Navbar = () => {
                 aria-labelledby='user-menu-button'
                 tabIndex={-1}
               >
-                <a
-                  href='/profile.html'
+                <Link
+                  href='/profile'
                   className='block px-4 py-2 text-sm text-gray-700'
                   role='menuitem'
                   tabIndex={-1}
                   id='user-menu-item-0'
                 >
                   Your Profile
-                </a>
-                <a
-                  href='/saved-properties.html'
+                </Link>
+                <Link
+                  href='/properties/saved'
                   className='block px-4 py-2 text-sm text-gray-700'
                   role='menuitem'
                   tabIndex={-1}
                   id='user-menu-item-2'
                 >
                   Saved Properties
-                </a>
+                </Link>
                 <button
                   className='block px-4 py-2 text-sm text-gray-700'
                   role='menuitem'
@@ -173,24 +176,24 @@ const Navbar = () => {
       {/* <!-- Mobile menu, show/hide based on menu state. --> */}
       <div className='hidden' id='mobile-menu'>
         <div className='space-y-1 px-2 pb-3 pt-2'>
-          <a
+          <Link
             href='/'
             className='bg-black text-white block rounded-md px-3 py-2 text-base font-medium'
           >
             Home
-          </a>
-          <a
-            href='/properties.html'
+          </Link>
+          <Link
+            href='/properties'
             className='text-white block rounded-md px-3 py-2 text-base font-medium'
           >
             Properties
-          </a>
-          <a
-            href='/add-property.html'
+          </Link>
+          <Link
+            href='/properties/add'
             className='text-white block rounded-md px-3 py-2 text-base font-medium'
           >
             Add Property
-          </a>
+          </Link>
           <button className='flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5'>
             <i className='fa-brands fa-google mr-2'></i>
             <span>Login or Register</span>
