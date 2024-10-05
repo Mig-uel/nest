@@ -33,7 +33,7 @@ type IProperty = {
 }
 
 type IUser = {
-  _id: Types.ObjectId
+  _id?: Types.ObjectId
   email: string | undefined
   username: string
   image: string
