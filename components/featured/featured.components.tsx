@@ -1,48 +1,23 @@
 import Link from 'next/link'
+import { connectDB } from '@/config/database'
+import Property from '@/models/property.model'
 
-import properties from '@/properties.json'
 import PropertyCard from '../property/property-card.component'
+import type { IProperty } from '@/types'
 
-type Property = {
-  _id?: string
-  owner: string
-  name: string
-  type: string
-  description: string
-  location: {
-    street: string
-    city: string
-    state: string
-    zipcode: string
-  }
-  beds: number
-  baths: number
-  square_feet: number
-  amenities: string[]
-  rates: {
-    weekly?: number
-    monthly?: number
-    nightly?: number
-  }
-  seller_info: {
-    name: string
-    email: string
-    phone: string
-  }
-  images: string[]
-  is_featured: boolean
-  createdAt?: string
-  updatedAt?: string
-}
+const Featured = async () => {
+  await connectDB()
+  const properties = (await Property.find({}).lean()) as IProperty[]
 
-const Featured = () => {
+  // return random property
   const randomProperty = () => {
     const randInt = Math.floor(Math.random() * properties.length)
 
     return properties[randInt]
   }
 
-  const featuredProperties = [
+  // TODO: implement better featured property mechanism
+  const featuredProperties: IProperty[] = [
     randomProperty(),
     randomProperty(),
     randomProperty(),
@@ -60,7 +35,7 @@ const Featured = () => {
           ) : (
             <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
               {featuredProperties.map((property) => (
-                <PropertyCard key={property._id} property={property} />
+                <PropertyCard key={property.name} {...property} />
               ))}
             </div>
           )}
