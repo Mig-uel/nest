@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 
 import { FaGoogle } from 'react-icons/fa'
 import profileDefault from '@/assets/images/profile.png'
@@ -11,6 +12,8 @@ import logo from '@/assets/images/logo-white.png'
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState<boolean>(false)
+
+  const pathname = usePathname()
 
   return (
     <nav className='bg-blue-700 border-b border-blue-500'>
@@ -60,19 +63,25 @@ const Navbar = () => {
               <div className='flex space-x-2'>
                 <Link
                   href='/'
-                  className='text-white bg-black hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
+                  className={`text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 ${
+                    pathname === '/' ? 'bg-black' : ''
+                  }`}
                 >
                   Home
                 </Link>
                 <Link
                   href='/properties'
-                  className='text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
+                  className={`text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 ${
+                    pathname === '/properties' ? 'bg-black' : ''
+                  }`}
                 >
                   Properties
                 </Link>
                 <Link
                   href='/properties/add'
-                  className='text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
+                  className={`text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 ${
+                    pathname === '/properties/add' ? 'bg-black' : ''
+                  }`}
                 >
                   Add Property
                 </Link>
