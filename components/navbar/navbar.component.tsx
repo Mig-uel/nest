@@ -198,19 +198,25 @@ const Navbar = () => {
           <div className='space-y-1 px-2 pb-3 pt-2'>
             <Link
               href='/'
-              className='bg-black text-white block rounded-md px-3 py-2 text-base font-medium'
+              className={`text-white block rounded-md px-3 py-2 text-base font-medium ${
+                pathname === '/' ? 'bg-black' : 'first-letter:'
+              }`}
             >
               Home
             </Link>
             <Link
               href='/properties'
-              className='text-white block rounded-md px-3 py-2 text-base font-medium'
+              className={`text-white block rounded-md px-3 py-2 text-base font-medium ${
+                pathname === '/properties' ? 'bg-black' : 'first-letter:'
+              }`}
             >
               Properties
             </Link>
             <Link
               href='/properties/add'
-              className='text-white block rounded-md px-3 py-2 text-base font-medium'
+              className={`text-white block rounded-md px-3 py-2 text-base font-medium ${
+                pathname === '/properties/add' ? 'bg-black' : 'first-letter:'
+              }`}
             >
               Add Property
             </Link>
