@@ -44,6 +44,34 @@ type Property = {
 }
 
 const PropertyCard = ({ property }: Property) => {
+  const rates = Object.entries(property.rates)
+
+  const availableRates = rates.map((rate) => {
+    if (
+      rate[0] === 'weekly' ||
+      rate[0] === 'nightly' ||
+      rate[0] === 'monthly'
+    ) {
+      if (rate[0] === 'weekly')
+        return {
+          type: rate[0],
+          rate: `$${rate[1].toLocaleString()}/wk`,
+        }
+      else if (rate[0] === 'monthly')
+        return {
+          type: rate[0],
+          rate: `$${rate[1].toLocaleString()}/mo`,
+        }
+      else if (rate[0] === 'nightly')
+        return {
+          type: rate[0],
+          rate: `$${rate[1].toLocaleString()}/night`,
+        }
+    }
+
+    return
+  })
+
   return (
     <div className='rounded-xl shadow-md relative'>
       <Image
@@ -59,6 +87,9 @@ const PropertyCard = ({ property }: Property) => {
           <div className='text-gray-600'>{property.type}</div>
           <h3 className='text-xl font-bold'>{property.name}</h3>
         </div>
+        <h3 className='absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right md:text-center lg:text-right'>
+          {availableRates[0]?.rate}
+        </h3>
 
         <div className='flex justify-center gap-4 text-gray-500 mb-4'>
           <p>
@@ -76,6 +107,13 @@ const PropertyCard = ({ property }: Property) => {
           </p>
         </div>
 
+        <div className='flex justify-center gap-4 text-green-900 text-sm mb-4'>
+          {availableRates.map((rate) => (
+            <p key={rate?.rate} className='capitalize'>
+              <FaMoneyBill className='md:hidden lg:inline' /> {rate?.type}
+            </p>
+          ))}
+        </div>
 
         <div className='border border-gray-100 mb-5'></div>
 
