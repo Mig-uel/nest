@@ -5,6 +5,7 @@ import Property from '@/models/property.model'
 import PropertyCard from '../property/property-card.component'
 import type { IProperty } from '@/types'
 
+// TODO: separate featured and recent properties into their respective components
 const Featured = async () => {
   await connectDB()
   const properties = (await Property.find({}).lean()) as IProperty[]
