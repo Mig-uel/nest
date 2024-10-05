@@ -1,3 +1,4 @@
+import Featured from '@/components/featured/featured.components'
 import Hero from '@/components/hero/hero.component'
 import InfoBoxes from '@/components/info-boxes/info-boxes.component'
 
@@ -6,6 +7,8 @@ const HomePage = () => {
     <>
       <Hero />
       <InfoBoxes />
+
+      <Featured />
     </>
   )
 }
