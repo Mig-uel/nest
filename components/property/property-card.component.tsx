@@ -9,44 +9,22 @@ import {
   FaMapMarker,
 } from 'react-icons/fa'
 
-type Property = {
-  property: {
-    _id?: string
-    owner: string
-    name: string
-    type: string
-    description: string
-    location: {
-      street: string
-      city: string
-      state: string
-      zipcode: string
-    }
-    beds: number
-    baths: number
-    square_feet: number
-    amenities: string[]
-    rates: {
-      weekly?: number
-      monthly?: number
-      nightly?: number
-    }
-    seller_info: {
-      name: string
-      email: string
-      phone: string
-    }
-    images: string[]
-    is_featured: boolean
-    createdAt?: string
-    updatedAt?: string
-  }
-}
+import type { IProperty } from '@/types'
 
-const PropertyCard = ({ property }: Property) => {
-  const rates = Object.entries(property.rates)
+const PropertyCard = ({
+  rates,
+  images,
+  name,
+  type,
+  beds,
+  baths,
+  square_feet,
+  location,
+  _id,
+}: IProperty) => {
+  const ratesObj = Object.entries(rates)
 
-  const availableRates = rates.map((rate) => {
+  const availableRates = ratesObj.map((rate) => {
     if (
       rate[0] === 'weekly' ||
       rate[0] === 'nightly' ||
@@ -75,8 +53,8 @@ const PropertyCard = ({ property }: Property) => {
   return (
     <div className='rounded-xl shadow-md relative'>
       <Image
-        src={`/images/properties/${property.images[0]}`}
-        alt={property.name}
+        src={`/images/properties/${images[0]}`}
+        alt={name}
         className='w-full h-auto rounded-t-xl'
         width={0}
         height={0}
@@ -84,8 +62,8 @@ const PropertyCard = ({ property }: Property) => {
       />
       <div className='p-4'>
         <div className='text-left md:text-center lg:text-left mb-6'>
-          <div className='text-gray-600'>{property.type}</div>
-          <h3 className='text-xl font-bold'>{property.name}</h3>
+          <div className='text-gray-600'>{type}</div>
+          <h3 className='text-xl font-bold'>{name}</h3>
         </div>
         <h3 className='absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right md:text-center lg:text-right'>
           {availableRates[0]?.rate}
@@ -93,17 +71,16 @@ const PropertyCard = ({ property }: Property) => {
 
         <div className='flex justify-center gap-4 text-gray-500 mb-4'>
           <p>
-            <FaBed className='md:hidden lg:inline' /> {property.beds}{' '}
+            <FaBed className='md:hidden lg:inline' /> {beds}{' '}
             <span className='md:hidden lg:inline'>Beds</span>
           </p>
           <p>
-            <FaBath className='md:hidden lg:inline' /> {property.baths}{' '}
+            <FaBath className='md:hidden lg:inline' /> {baths}{' '}
             <span className='md:hidden lg:inline'>Baths</span>
           </p>
           <p>
             <FaRulerCombined className='md:hidden lg:inline' />
-            {property.square_feet}{' '}
-            <span className='md:hidden lg:inline'>sqft</span>
+            {square_feet} <span className='md:hidden lg:inline'>sqft</span>
           </p>
         </div>
 
@@ -122,11 +99,11 @@ const PropertyCard = ({ property }: Property) => {
             <FaMapMarker className='text-orange-700 mt-1' />
             <span className='text-orange-700'>
               {' '}
-              {property.location.city}, {property.location.state}{' '}
+              {location.city}, {location.state}{' '}
             </span>
           </div>
           <Link
-            href={`/properties/${property._id}`}
+            href={`/properties/${_id}`}
             className='h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm'
           >
             Details
