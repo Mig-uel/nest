@@ -23,6 +23,13 @@ const Featured = async () => {
     randomProperty(),
   ]
 
+  const recentProperties = (await Property.find({})
+    .sort({
+      createdAt: -1,
+    })
+    .limit(3)
+    .lean()) as IProperty[]
+
   return (
     <>
       <section className='px-4 py-6'>
@@ -35,6 +42,20 @@ const Featured = async () => {
           ) : (
             <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
               {featuredProperties.map((property) => (
+                <PropertyCard key={property.name} {...property} />
+              ))}
+            </div>
+          )}
+
+          <h2 className='text-3xl font-bold text-blue-500 mb-6 mt-10'>
+            Recent Properties
+          </h2>
+
+          {!recentProperties.length ? (
+            <p>No recent properties available</p>
+          ) : (
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+              {recentProperties.map((property) => (
                 <PropertyCard key={property.name} {...property} />
               ))}
             </div>
