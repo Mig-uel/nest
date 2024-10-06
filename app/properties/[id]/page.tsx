@@ -1,4 +1,40 @@
-const PropertyPage = () => {
-  return <div>PropertyPage</div>
+import { redirect } from 'next/navigation'
+import { connectDB } from '@/config/database'
+import Property from '@/models/property.model'
+
+import PropertyHeaderImage from '@/components/property/property-header-image.component'
+
+import type { Types } from 'mongoose'
+import type { IProperty } from '@/types'
+import Link from 'next/link'
+import { FaArrowLeft } from 'react-icons/fa'
+
+const PropertyPage = async ({
+  params: { id },
+}: {
+  params: { id: Types.ObjectId }
+}) => {
+  await connectDB()
+
+  const property = (await Property.findById(id).lean()) as IProperty
+
+  if (!property) return redirect('/')
+
+  return (
+    <>
+      <PropertyHeaderImage name={property.name} image={property.images[0]} />
+
+      <section>
+        <div className='container m-auto py-6 px-6'>
+          <Link
+            href='/properties'
+            className='text-blue-500 hover:text-blue-600 flex items-center'
+          >
+            <FaArrowLeft className='mr-2' /> Back to Properties
+          </Link>
+        </div>
+      </section>
+    </>
+  )
 }
 export default PropertyPage
