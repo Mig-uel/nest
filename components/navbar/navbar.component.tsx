@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation'
 import { FaGoogle } from 'react-icons/fa'
 import profileDefault from '@/assets/images/profile.png'
 import logo from '@/assets/images/logo-white.png'
-import { getProviders, signIn, useSession } from 'next-auth/react'
+import { getProviders, signIn, signOut, useSession } from 'next-auth/react'
 
 const Navbar = () => {
   const pathname = usePathname()
@@ -211,6 +211,7 @@ const Navbar = () => {
                       role='menuitem'
                       tabIndex={-1}
                       id='user-menu-item-2'
+                      onClick={() => signOut()}
                     >
                       Sign Out
                     </button>
