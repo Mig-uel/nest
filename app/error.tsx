@@ -32,7 +32,7 @@ const ErrorPage = ({
               Something Went Wrong
             </h1>
             <p className='text-gray-500 text-xl mb-10'>
-              The page you are looking for does not exist.
+              Oops, something went terribly wrong.
             </p>
             <Link
               href='/'
