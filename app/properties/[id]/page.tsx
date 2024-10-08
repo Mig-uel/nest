@@ -8,6 +8,7 @@ import { FaArrowLeft } from 'react-icons/fa'
 import type { Types } from 'mongoose'
 import type { IProperty } from '@/types'
 import Link from 'next/link'
+import PropertyDetails from '@/components/property/property-details.component'
 
 const PropertyPage = async ({
   params: { id },
@@ -38,7 +39,7 @@ const PropertyPage = async ({
       <section className='bg-blue-50'>
         <div className='container m-auto py-10 px-6'>
           <div className='grid grid-cols-1 md:grid-cols-70/30 w-full gap-6'>
-            {/* TODO: add property info */}
+            <PropertyDetails {...property} />
           </div>
         </div>
       </section>
