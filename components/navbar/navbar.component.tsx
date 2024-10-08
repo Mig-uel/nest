@@ -187,6 +187,7 @@ const Navbar = () => {
                     aria-orientation='vertical'
                     aria-labelledby='user-menu-button'
                     tabIndex={-1}
+                    onClick={() => setIsProfileMenuOpen((prev) => !prev)}
                   >
                     <Link
                       href='/profile'
@@ -226,7 +227,10 @@ const Navbar = () => {
       {/* <!-- Mobile menu, show/hide based on menu state. --> */}
       {isMobileMenuOpen && (
         <div id='mobile-menu'>
-          <div className='space-y-1 px-2 pb-3 pt-2'>
+          <div
+            className='space-y-1 px-2 pb-3 pt-2'
+            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          >
             <Link
               href='/'
               className={`text-white block rounded-md px-3 py-2 text-base font-medium ${
