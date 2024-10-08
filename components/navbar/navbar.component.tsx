@@ -169,8 +169,11 @@ const Navbar = () => {
                     <span className='sr-only'>Open user menu</span>
                     <Image
                       className='h-8 w-8 rounded-full'
-                      src={profileDefault}
+                      src={session.user?.image || profileDefault}
                       alt=''
+                      width={0}
+                      height={0}
+                      sizes='100vw'
                     />
                   </button>
                 </div>
