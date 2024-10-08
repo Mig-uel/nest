@@ -48,8 +48,14 @@ export const authOptions: AuthOptions = {
     // session callback function that modifies the session object
     async session({ session }) {
       // get user from db
-      // assign user id from session
+      const user = await User.findOne({ email: session.user?.email })
+
+      // @ts-ignore
+      // assign user id from the session
+      session.user.id = user._id.toString()
+
       // return session
+      return session
     },
   },
 }
