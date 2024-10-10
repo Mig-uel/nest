@@ -27,7 +27,7 @@ type IProperty = {
     phone: string
   }
   images: string[]
-  is_featured: boolean
+  is_featured?: boolean
   createdAt?: string
   updatedAt?: string
 }
