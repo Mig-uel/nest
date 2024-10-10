@@ -103,7 +103,8 @@ const PropertyCard = ({
             <FaMapMarker className='text-orange-700 mt-1' />
             <span className='text-orange-700'>
               {' '}
-              {location.city}, {location.state}{' '}
+              {location.city.substring(0, 10).concat('...')},{' '}
+              {location.state.substring(0, 10).concat('...')}{' '}
             </span>
           </div>
           <Link
