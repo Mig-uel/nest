@@ -1,15 +1,38 @@
 'use server'
 
-import { IProperty } from '@/types'
+import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
+import { connectDB } from '@/config/database'
+import Property from '@/models/property.model'
+import { Types } from 'mongoose'
+import { getSessionUser } from '@/utils/getSessionUser'
+
+import type { IProperty } from '@/types'
 
 export async function addProperty(formData: FormData) {
+  // connect to mongodb
+  await connectDB()
+
+  // session helper function
+  const session = await getSessionUser()
+
+  if (!session || !session.user) throw new Error('User ID is required')
+
+  // session user id
+  const { id } = session
+
   // images
-  const images = formData.getAll('images').filter((image) => {
-    if (image instanceof File) return image.name !== ''
-  }) as File[]
+  const images = formData
+    .getAll('images')
+    .filter((image) => {
+      if (image instanceof File) return image.name !== ''
+    })
+    .map((image) => {
+      if (image instanceof File) return image.name
+    }) as string[]
 
   // property
-  const property: IProperty = {
+  const propertyObject: IProperty = {
     type: formData.get('type') as string,
     name: formData.get('name') as string,
     description: formData.get('description') as string,
@@ -39,9 +62,14 @@ export async function addProperty(formData: FormData) {
       phone: formData.get('seller_info.phone') as string,
     },
 
-    // @ts-ignore
     images: images,
+
+    owner: Types.ObjectId.createFromHexString(id),
   }
 
-  console.log(property)
+  const property = await Property.create(propertyObject)
+
+  revalidatePath('/', 'layout')
+
+  redirect(`/properties/${property._id}`)
 }
