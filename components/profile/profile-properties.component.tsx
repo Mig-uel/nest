@@ -1,7 +1,4 @@
-'use client'
-
 import Link from 'next/link'
-import { useState } from 'react'
 import Image from 'next/image'
 import { deleteProperty } from '@/actions/profile/action'
 
@@ -13,8 +10,6 @@ const ProfileProperties = ({
 }: {
   initialProperties: IProperty[]
 }) => {
-  const [properties, setProperties] = useState(initialProperties)
-
   const handleDelete = async (id: Types.ObjectId) => {
     const confirmed = window.confirm(
       'Are you sure you want to delete this property?'
@@ -25,9 +20,10 @@ const ProfileProperties = ({
     await deleteProperty(id)
   }
 
-  if (!properties.length) return <h1>You have not listed any properties.</h1>
+  if (!initialProperties.length)
+    return <h1>You have not listed any properties.</h1>
 
-  return properties.map((property) => {
+  return initialProperties.map((property) => {
     const image = property.images?.length
       ? property.images[0]
       : 'https://placehold.co/600x400?text=Images+coming+soon'
