@@ -49,7 +49,7 @@ const PropertyPage = async ({
         </div>
       </section>
       {property.images?.length ? (
-        <PropertyImages images={property.images} />
+        <PropertyImages name={property.name} images={property.images} />
       ) : (
         <p>Images coming soon...</p>
       )}
