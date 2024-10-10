@@ -6,6 +6,7 @@ import { deleteProperty } from '@/actions/profile/action'
 
 import type { IProperty } from '@/types'
 import type { Types } from 'mongoose'
+import { toast } from 'react-toastify'
 
 const ProfileProperties = ({ properties }: { properties: IProperty[] }) => {
   const handleDelete = async (id: Types.ObjectId) => {
@@ -16,6 +17,8 @@ const ProfileProperties = ({ properties }: { properties: IProperty[] }) => {
     if (!confirmed) return
 
     await deleteProperty(id)
+
+    toast.success('Deleted property')
   }
 
   if (!properties.length) return <h1>You have not listed any properties.</h1>
