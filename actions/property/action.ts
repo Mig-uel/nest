@@ -2,6 +2,7 @@
 
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
+import cloudinary from '@/config/cloudinary'
 import { connectDB } from '@/config/database'
 import Property from '@/models/property.model'
 import { Types } from 'mongoose'
@@ -22,14 +23,9 @@ export async function addProperty(formData: FormData) {
   const { id } = session
 
   // images
-  const images = formData
-    .getAll('images')
-    .filter((image) => {
-      if (image instanceof File) return image.name !== ''
-    })
-    .map((image) => {
-      if (image instanceof File) return image.name
-    }) as string[]
+  const images = formData.getAll('images').filter((image) => {
+    if (image instanceof File) return image.name !== ''
+  }) as File[]
 
   // property
   const propertyObject: IProperty = {
@@ -62,10 +58,32 @@ export async function addProperty(formData: FormData) {
       phone: formData.get('seller_info.phone') as string,
     },
 
-    images: images,
-
     owner: Types.ObjectId.createFromHexString(id),
   }
+
+  const imageUrls: string[] = []
+
+  for (const imageFile of images) {
+    const imageBuffer = await imageFile.arrayBuffer()
+
+    const imageArray = Array.from(new Uint8Array(imageBuffer))
+
+    const imageData = Buffer.from(imageArray)
+
+    // convert to base64
+    const imageBase64 = imageData.toString('base64')
+
+    // make request to cloudinary
+    const result = await cloudinary.uploader.upload(
+      `data:image/png;base64,${imageBase64}`,
+      { folder: 'Nest' }
+    )
+
+    // add image urls
+    imageUrls.push(result.secure_url)
+  }
+
+  propertyObject.images = imageUrls
 
   const property = await Property.create(propertyObject)
 
