@@ -50,10 +50,14 @@ const PropertyCard = ({
     return
   })
 
+  const imageSrc = images?.length
+    ? images[0]
+    : 'https://placehold.co/600x400?text=Images+coming+soon'
+
   return (
     <div className='rounded-xl shadow-md relative'>
       <Image
-        src={`/images/properties/${images[0]}`}
+        src={imageSrc}
         alt={name}
         className='w-full h-auto rounded-t-xl'
         width={0}
