@@ -1,4 +1,21 @@
-const ProfilePage = () => {
+import Image from 'next/image'
+import { connectDB } from '@/config/database'
+import Property from '@/models/property.model'
+import { getSessionUser } from '@/utils/getSessionUser'
+import profileDefault from '@/assets/images/profile.png'
+import { redirect } from 'next/navigation'
+
+const ProfilePage = async () => {
+  await connectDB()
+
+  const session = await getSessionUser()
+
+  if (!session || !session.user) return redirect('/')
+
+  const { id, user } = session
+
+  const profileImage = user?.image || profileDefault
+
   return (
     <section className='bg-blue-50'>
       <div className='container m-auto py-24'>
@@ -7,18 +24,20 @@ const ProfilePage = () => {
           <div className='flex flex-col md:flex-row'>
             <div className='md:w-1/4 mx-20 mt-10'>
               <div className='mb-4'>
-                <img
+                <Image
                   className='h-32 w-32 md:h-48 md:w-48 rounded-full mx-auto md:mx-0'
-                  src='/images/profile.png'
-                  alt='User'
+                  src={profileImage}
+                  alt={user.name}
+                  height={200}
+                  width={200}
                 />
               </div>
 
               <h2 className='text-2xl mb-4'>
-                <span className='font-bold block'>Name: </span> John Doe
+                <span className='font-bold block'>Name: </span> {user.name}
               </h2>
               <h2 className='text-2xl'>
-                <span className='font-bold block'>Email: </span> john@gmail.com
+                <span className='font-bold block'>Email: </span> {user.email}
               </h2>
             </div>
 
@@ -28,8 +47,8 @@ const ProfilePage = () => {
                 <a href='/property.html'>
                   <img
                     className='h-32 w-full rounded-md object-cover'
-                    src='/images/properties/a1.jpg'
-                    alt='Property 1'
+                    src='/images/properties/b1.jpg'
+                    alt='Property 2'
                   />
                 </a>
                 <div className='mt-2'>
