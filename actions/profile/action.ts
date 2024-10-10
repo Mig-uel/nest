@@ -3,7 +3,6 @@
 import cloudinary from '@/config/cloudinary'
 import { connectDB } from '@/config/database'
 import Property from '@/models/property.model'
-import { IProperty } from '@/types'
 import { getSessionUser } from '@/utils/getSessionUser'
 import { ObjectId } from 'mongoose'
 import { revalidatePath } from 'next/cache'
@@ -15,7 +14,7 @@ export async function deleteProperty(propertyId: ObjectId) {
 
   await connectDB()
 
-  const { user, id } = session
+  const { id } = session
 
   const property = await Property.findById(propertyId)
 
