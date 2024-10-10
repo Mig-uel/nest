@@ -17,7 +17,7 @@ const ProfilePage = async () => {
   const profileImage = user?.image || profileDefault
 
   // fetch properties
-  const properties = await Property.find({ owner: id }).lean()
+  const properties = await Property.find({ owner: id })
 
   return (
     <section className='bg-blue-50'>
