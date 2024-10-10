@@ -1,7 +1,9 @@
 'use client'
 
+import Link from 'next/link'
 import { useState } from 'react'
 import Image from 'next/image'
+
 import type { IProperty } from '@/types'
 
 const ProfileProperties = ({
@@ -18,7 +20,7 @@ const ProfileProperties = ({
 
     return (
       <div key={property._id?.toString()} className='mb-10'>
-        <a href='/property.html'>
+        <Link href={`/properties/${property._id}`}>
           <Image
             className='h-32 w-full rounded-md object-cover'
             src={image}
@@ -26,7 +28,7 @@ const ProfileProperties = ({
             width={1000}
             height={200}
           />
-        </a>
+        </Link>
         <div className='mt-2'>
           <p className='text-lg font-semibold'>{property.name}</p>
           <p className='text-gray-600'>Address: {property.location.street}</p>
