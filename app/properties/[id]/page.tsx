@@ -1,14 +1,15 @@
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { connectDB } from '@/config/database'
 import Property from '@/models/property.model'
 
+import PropertyDetails from '@/components/property/property-details.component'
 import PropertyHeaderImage from '@/components/property/property-header-image.component'
+import PropertyImages from '@/components/property/property-images.component'
 import { FaArrowLeft } from 'react-icons/fa'
 
 import type { Types } from 'mongoose'
 import type { IProperty } from '@/types'
-import Link from 'next/link'
-import PropertyDetails from '@/components/property/property-details.component'
 
 const PropertyPage = async ({
   params: { id },
@@ -47,6 +48,11 @@ const PropertyPage = async ({
           </div>
         </div>
       </section>
+      {property.images?.length ? (
+        <PropertyImages images={property.images} />
+      ) : (
+        <p>Images coming soon...</p>
+      )}
     </>
   )
 }
