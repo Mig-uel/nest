@@ -5,11 +5,7 @@ import { deleteProperty } from '@/actions/profile/action'
 import type { IProperty } from '@/types'
 import type { Types } from 'mongoose'
 
-const ProfileProperties = ({
-  initialProperties,
-}: {
-  initialProperties: IProperty[]
-}) => {
+const ProfileProperties = ({ properties }: { properties: IProperty[] }) => {
   const handleDelete = async (id: Types.ObjectId) => {
     const confirmed = window.confirm(
       'Are you sure you want to delete this property?'
@@ -20,10 +16,9 @@ const ProfileProperties = ({
     await deleteProperty(id)
   }
 
-  if (!initialProperties.length)
-    return <h1>You have not listed any properties.</h1>
+  if (!properties.length) return <h1>You have not listed any properties.</h1>
 
-  return initialProperties.map((property) => {
+  return properties.map((property) => {
     const image = property.images?.length
       ? property.images[0]
       : 'https://placehold.co/600x400?text=Images+coming+soon'
