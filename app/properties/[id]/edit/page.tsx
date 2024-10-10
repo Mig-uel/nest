@@ -2,15 +2,19 @@ import { connectDB } from '@/config/database'
 import Property from '@/models/property.model'
 import PropertyEditForm from '@/components/edit/property-edit-form.component'
 import { redirect } from 'next/navigation'
+import { getSessionUser } from '@/utils/getSessionUser'
 
 import type { IProperty } from '@/types'
 
 const EditPropertyPage = async ({ params }: { params: { id: string } }) => {
+  const session = await getSessionUser()
+  if (!session || !session.user) return redirect('/')
+
   await connectDB()
 
-  const property = (await Property.findById(params.id)) as IProperty
-
-  if (!property) return redirect('/')
+  const property = (await Property.findById(params.id).lean()) as IProperty
+  if (!property || property.owner.toString() !== session.id)
+    return redirect('/')
 
   return (
     <section className='bg-blue-50'>
