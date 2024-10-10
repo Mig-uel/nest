@@ -25,6 +25,8 @@ const ProfileProperties = ({
     await deleteProperty(id)
   }
 
+  if (!properties.length) return <h1>You have not listed any properties.</h1>
+
   return properties.map((property) => {
     const image = property.images?.length
       ? property.images[0]
