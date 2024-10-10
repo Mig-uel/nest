@@ -8,5 +8,6 @@ export const getSessionUser = async () => {
 
   return {
     user: session.user,
+    id: session.user.id,
   }
 }
