@@ -13,6 +13,8 @@ export async function deleteProperty(propertyId: ObjectId) {
 
   if (!session || !session.user) throw new Error('Invalid session')
 
+  await connectDB()
+
   const { user, id } = session
 
   const property = await Property.findById(propertyId)
