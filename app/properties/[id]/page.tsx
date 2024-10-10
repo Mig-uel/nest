@@ -21,9 +21,13 @@ const PropertyPage = async ({
 
   if (!property) return redirect('/')
 
+  const imageSrc = property.images?.length
+    ? property.images[0]
+    : 'https://placehold.co/600x400?text=Images+coming+soon'
+
   return (
     <>
-      <PropertyHeaderImage name={property.name} image={property.images[0]} />
+      <PropertyHeaderImage name={property.name} image={imageSrc} />
 
       <section>
         <div className='container m-auto py-6 px-6'>
