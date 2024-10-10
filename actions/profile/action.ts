@@ -4,10 +4,10 @@ import cloudinary from '@/config/cloudinary'
 import { connectDB } from '@/config/database'
 import Property from '@/models/property.model'
 import { getSessionUser } from '@/utils/getSessionUser'
-import { ObjectId } from 'mongoose'
+import type { Types } from 'mongoose'
 import { revalidatePath } from 'next/cache'
 
-export async function deleteProperty(propertyId: ObjectId) {
+export async function deleteProperty(propertyId: Types.ObjectId) {
   const session = await getSessionUser()
 
   if (!session || !session.user) throw new Error('Invalid session')
