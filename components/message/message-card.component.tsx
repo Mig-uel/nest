@@ -1,6 +1,6 @@
 'use client'
 
-import { markMessageAsRead } from '@/actions/message/actions'
+import { deleteMessage, markMessageAsRead } from '@/actions/message/actions'
 import type { IMessage } from '@/types'
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
@@ -11,9 +11,17 @@ const MessageCard = ({ message }: { message: IMessage }) => {
     message: '',
   })
 
+  const [deleteState, deleteFormAction] = useFormState(deleteMessage, {
+    message: '',
+  })
+
   useEffect(() => {
     if (state.message) toast.success(state.message)
   }, [state])
+
+  useEffect(() => {
+    if (deleteState.message) toast.success(deleteState.message)
+  }, [deleteState])
 
   return (
     <div className='relative bg-white p-4 rounded-md shadow-md border border-gray-200'>
@@ -62,12 +70,16 @@ const MessageCard = ({ message }: { message: IMessage }) => {
         </button>
       </form>
 
-      <button
-        type='submit'
-        className='mt-4 bg-red-500 text-white py-1 px-3 rounded-md'
-      >
-        Delete
-      </button>
+      <form action={deleteFormAction} className='inline'>
+        <input type='hidden' name='messageId' defaultValue={message._id} />
+
+        <button
+          type='submit'
+          className='mt-4 bg-red-500 text-white py-1 px-3 rounded-md'
+        >
+          Delete
+        </button>
+      </form>
     </div>
   )
 }
