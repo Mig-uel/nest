@@ -34,6 +34,8 @@
 ## Messages
 
 - [ ] Add validation check to see if someone has tampered with the recipient or sender hidden id
+- [ ] Implement a better messaging system
+- [ ] Implement reply functionality
 
 ## General
 
