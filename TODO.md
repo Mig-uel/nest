@@ -41,3 +41,4 @@
 - [ ] Improve performance
 - [ ] Improve accessibility
 - [ ] Enhance user experience
+- [ ] Add more toasts
