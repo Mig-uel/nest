@@ -1,7 +1,7 @@
+import { updateProperty } from '@/actions/property/action'
 import type { IProperty } from '@/types'
 
 // TODO: restrict email and name to current session user when adding new property and editing
-// TODO: fix single property page rates (currently all showing the same rates)
 
 const PropertyEditForm = async ({
   _id,
@@ -17,7 +17,7 @@ const PropertyEditForm = async ({
   amenities,
 }: IProperty) => {
   return (
-    <form>
+    <form action={updateProperty}>
       <h2 className='text-3xl text-center font-semibold mb-6'>Edit Property</h2>
       <div className='mb-4'>
         <label htmlFor='type' className='block text-gray-700 font-bold mb-2'>
