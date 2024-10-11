@@ -14,12 +14,16 @@ import PropertyBookmarkButton from '@/components/property/property-bookmark-butt
 import PropertyShareButtons from '@/components/property/property-share-buttons.component'
 import PropertyContactForm from '@/components/property/property-contact-form.component'
 import { convertToSerializableObject } from '@/utils/convertToObject'
+import { getSessionUser } from '@/utils/getSessionUser'
 
 const PropertyPage = async ({
   params: { id },
 }: {
   params: { id: Types.ObjectId }
 }) => {
+  // get current session user
+  const session = await getSessionUser()
+
   await connectDB()
 
   const property = convertToSerializableObject(
@@ -27,6 +31,9 @@ const PropertyPage = async ({
   ) as IProperty
 
   if (!property) return redirect('/')
+
+  // boolean checks if the user logged in is the owner of current property in view
+  const isOwner = session?.id === property.owner.toString()
 
   const imageSrc = property.images?.length
     ? property.images[0]
@@ -55,7 +62,8 @@ const PropertyPage = async ({
               {/* TODO: add functionality to buttons */}
               <PropertyBookmarkButton {...property} />
               <PropertyShareButtons {...property} />
-              <PropertyContactForm {...property} />
+
+              {!isOwner && <PropertyContactForm {...property} />}
             </aside>
           </div>
         </div>
