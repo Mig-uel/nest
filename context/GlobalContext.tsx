@@ -14,9 +14,10 @@ import { getUnreadMessageCount } from '@/actions/message/actions'
 // create context
 const GlobalContext = createContext<{
   unreadCount: number
-  setUnreadCount?: Dispatch<SetStateAction<number>>
+  setUnreadCount: Dispatch<SetStateAction<number>> | null
 }>({
   unreadCount: 0,
+  setUnreadCount: null,
 })
 
 // create context provider
