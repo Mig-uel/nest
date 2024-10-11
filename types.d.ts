@@ -39,3 +39,14 @@ type IUser = {
   image: string
   bookmarks: Types.ObjectId[]
 }
+
+type IMessage = {
+  sender: Types.ObjectId
+  recipient: Types.ObjectId
+  property: Types.ObjectId
+  name: string
+  email: string
+  phone?: string
+  body?: string
+  read: boolean
+}
