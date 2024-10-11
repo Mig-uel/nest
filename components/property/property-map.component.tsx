@@ -1,8 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { icon } from 'leaflet'
+import { MapContainer, Marker, TileLayer } from 'react-leaflet'
+
 import type { IProperty } from '@/types'
-import Script from 'next/script'
+
+import 'leaflet/dist/leaflet.css'
 
 type LocationInfo = {
   lat: string
@@ -16,6 +20,12 @@ type ViewPort = {
   width: string
   height: string
 }
+
+const iconUrl = 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon-2x.png'
+const markerIcon = icon({
+  iconUrl,
+  iconSize: [20, 30],
+})
 
 const PropertyMap = (location: IProperty['location']) => {
   const [locationInfo, setLocationInfo] = useState<LocationInfo[]>([])
@@ -67,31 +77,27 @@ const PropertyMap = (location: IProperty['location']) => {
 
   if (loading) return <h3>Loading map...</h3>
 
-  if (!locationInfo.length)
+  if (!locationInfo.length || !locationInfo)
     return <div className='text-xl'>No location data </div>
 
   return (
-    <>
-      <div id='map'></div>
-      <Script
-        src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
-        type='module'
-        onLoad={() => {
-          var map = L.map('map').setView(
-            [locationInfo[0].lat, locationInfo[0].lon],
-            13
-          )
-          L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution:
-              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-          }).addTo(map)
-          L.marker([locationInfo[0].lat, locationInfo[0].lon])
-            .addTo(map)
-            .bindPopup(`${location.street}`)
-            .openPopup()
-        }}
-      ></Script>
-    </>
+    <MapContainer
+      center={[+locationInfo[0].lat, +locationInfo[0].lon]}
+      zoom={13}
+      scrollWheelZoom={false}
+      zoomControl={false}
+      className='h-[300px] rounded-lg relative z-0'
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      />
+
+      <Marker
+        position={[+locationInfo[0].lat, +locationInfo[0].lon]}
+        icon={markerIcon}
+      ></Marker>
+    </MapContainer>
   )
 }
 export default PropertyMap
