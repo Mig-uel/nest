@@ -1,4 +1,4 @@
-import { updateProperty } from '@/actions/property/action'
+import { updateProperty } from '@/actions/property/actions'
 import type { IProperty } from '@/types'
 
 // TODO: restrict email and name to current session user when adding new property and editing
