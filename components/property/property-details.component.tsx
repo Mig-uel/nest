@@ -7,7 +7,11 @@ import {
   FaTimes,
 } from 'react-icons/fa'
 import type { IProperty } from '@/types'
-import PropertyMap from './property-map.component'
+import dynamic from 'next/dynamic'
+
+const DynamicMap = dynamic(() => import('../property/property-map.component'), {
+  ssr: false,
+})
 
 const PropertyDetails = ({
   type,
@@ -101,7 +105,7 @@ const PropertyDetails = ({
 
       {/* <!-- Map --> */}
       <div className='bg-white p-6 rounded-lg shadow-md mt-6'>
-        <PropertyMap {...location} />
+        <DynamicMap {...location} />
       </div>
     </main>
   )
