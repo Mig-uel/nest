@@ -1,17 +1,12 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useFormState, useFormStatus } from 'react-dom'
-import { useSession } from 'next-auth/react'
-import { toast } from 'react-toastify'
+import { useFormState } from 'react-dom'
 import { addMessage } from '@/actions/message/actions'
 
-import { FaPaperPlane } from 'react-icons/fa'
 import type { IProperty } from '@/types'
+import SubmitButton from '../submit-button.component'
 
 const PropertyContactForm = ({ _id, owner }: IProperty) => {
-  const { data: session } = useSession()
-
   const [state, formAction] = useFormState(addMessage, {
     message: '',
     submitted: false,
@@ -44,7 +39,6 @@ const PropertyContactForm = ({ _id, owner }: IProperty) => {
             type='text'
             placeholder='Enter your name'
             required
-            disabled={!session}
           />
         </div>
         <div className='mb-4'>
@@ -61,7 +55,6 @@ const PropertyContactForm = ({ _id, owner }: IProperty) => {
             type='email'
             placeholder='Enter your email'
             required
-            disabled={!session}
           />
         </div>
         <div className='mb-4'>
@@ -77,7 +70,6 @@ const PropertyContactForm = ({ _id, owner }: IProperty) => {
             name='phone'
             type='text'
             placeholder='Enter your phone number'
-            disabled={!session}
           />
         </div>
         <div className='mb-4'>
@@ -92,17 +84,10 @@ const PropertyContactForm = ({ _id, owner }: IProperty) => {
             id='body'
             name='body'
             placeholder='Enter your message'
-            disabled={!session}
           ></textarea>
         </div>
         <div>
-          <button
-            className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline flex items-center justify-center'
-            type='submit'
-            disabled={!session}
-          >
-            <FaPaperPlane className='fas fa-paper-plane mr-2' /> Send Message
-          </button>
+          <SubmitButton />
         </div>
       </form>
     </div>
