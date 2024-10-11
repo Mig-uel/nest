@@ -102,6 +102,7 @@ export async function markMessageAsRead(prevState: any, formData: FormData) {
       message: message.read
         ? 'Message marked as unread'
         : 'Message marked as read',
+      read: message.read,
     }
   } catch (error) {
     return {
