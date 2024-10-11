@@ -31,6 +31,10 @@
 
 - [ ] Improve back button functionality to go back to the previous page instead of the properties page always
 
+## Messages
+
+- [ ] Add validation check to see if someone has tampered with the recipient or sender hidden id
+
 ## General
 
 - [ ] Fix bugs
