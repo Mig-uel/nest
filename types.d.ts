@@ -48,5 +48,5 @@ type IMessage = {
   email: string
   phone?: string
   body?: string
-  read: boolean
+  read?: boolean
 }
