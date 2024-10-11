@@ -4,6 +4,7 @@ import type { IProperty } from '@/types'
 // TODO: fix single property page rates (currently all showing the same rates)
 
 const PropertyEditForm = async ({
+  _id,
   type,
   name,
   description,
@@ -432,6 +433,7 @@ const PropertyEditForm = async ({
           required
         />
       </div> */}
+      <input type='hidden' name='propertyId' value={_id?.toString()} />
       <div>
         <button
           className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline'
