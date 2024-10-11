@@ -22,3 +22,7 @@
 
 - [ ] Separate featured and recent properties into their respective components
 - [ ] Implement better featured property mechanism
+
+## PropertyMap.component.tsx
+
+- [ ] Implement a better map mechanism
