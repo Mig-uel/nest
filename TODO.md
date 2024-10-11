@@ -42,3 +42,4 @@
 - [ ] Improve accessibility
 - [ ] Enhance user experience
 - [ ] Add more toasts
+- [ ] Refactor server actions
