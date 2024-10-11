@@ -1,8 +1,27 @@
-import { IMessage } from '@/types'
+'use client'
+
+import { markMessageAsRead } from '@/actions/message/actions'
+import type { IMessage } from '@/types'
+import { useEffect } from 'react'
+import { useFormState } from 'react-dom'
+import { toast } from 'react-toastify'
 
 const MessageCard = ({ message }: { message: IMessage }) => {
+  const [state, formAction] = useFormState(markMessageAsRead, {
+    message: '',
+  })
+
+  useEffect(() => {
+    if (state.message) toast.success(state.message)
+  }, [state])
+
   return (
     <div className='relative bg-white p-4 rounded-md shadow-md border border-gray-200'>
+      {!message.read && (
+        <div className='absolute top-2 right-2 bg-yellow-500 text-white px-2 rounded-md py-1'>
+          New!
+        </div>
+      )}
       <h2 className='text-xl mb-4'>
         <span className='font-bold'>Property Inquiry:</span>{' '}
         {
@@ -33,10 +52,20 @@ const MessageCard = ({ message }: { message: IMessage }) => {
         </li>
       </ul>
 
-      <button className='mt-4 mr-3 bg-blue-500 text-white py-1 px-3 rounded-md'>
-        Mark As Read
-      </button>
-      <button className='mt-4 bg-red-500 text-white py-1 px-3 rounded-md'>
+      <form action={formAction} className='inline'>
+        <input type='hidden' name='messageId' defaultValue={message._id} />
+        <button
+          type='submit'
+          className='mt-4 mr-3 bg-blue-500 text-white py-1 px-3 rounded-md'
+        >
+          {message.read ? 'Mark Unread' : 'Mark Read'}
+        </button>
+      </form>
+
+      <button
+        type='submit'
+        className='mt-4 bg-red-500 text-white py-1 px-3 rounded-md'
+      >
         Delete
       </button>
     </div>
