@@ -10,6 +10,9 @@ import { FaArrowLeft } from 'react-icons/fa'
 
 import type { Types } from 'mongoose'
 import type { IProperty } from '@/types'
+import PropertyBookmarkButton from '@/components/property/property-bookmark-button.component'
+import PropertyShareButtons from '@/components/property/property-share-buttons.component'
+import PropertyContactForm from '@/components/property/property-contact-form.component'
 
 const PropertyPage = async ({
   params: { id },
@@ -45,6 +48,12 @@ const PropertyPage = async ({
         <div className='container m-auto py-10 px-6'>
           <div className='grid grid-cols-1 md:grid-cols-70/30 w-full gap-6'>
             <PropertyDetails {...property} />
+            <aside className='space-y-4'>
+              {/* TODO: add functionality to buttons */}
+              <PropertyBookmarkButton {...property} />
+              <PropertyShareButtons {...property} />
+              <PropertyContactForm {...property} />
+            </aside>
           </div>
         </div>
       </section>
