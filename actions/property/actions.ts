@@ -126,3 +126,5 @@ export async function updateProperty(formData: FormData) {
 
   redirect(`/properties/${property._id}`)
 }
+
+export async function bookmarkProperty() {}
