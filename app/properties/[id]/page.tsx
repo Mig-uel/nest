@@ -13,6 +13,7 @@ import type { IProperty } from '@/types'
 import PropertyBookmarkButton from '@/components/property/property-bookmark-button.component'
 import PropertyShareButtons from '@/components/property/property-share-buttons.component'
 import PropertyContactForm from '@/components/property/property-contact-form.component'
+import { convertToSerializableObject } from '@/utils/convertToObject'
 
 const PropertyPage = async ({
   params: { id },
@@ -21,7 +22,9 @@ const PropertyPage = async ({
 }) => {
   await connectDB()
 
-  const property = (await Property.findById(id).lean()) as IProperty
+  const property = convertToSerializableObject(
+    await Property.findById(id).lean()
+  ) as IProperty
 
   if (!property) return redirect('/')
 
