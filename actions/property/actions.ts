@@ -4,11 +4,12 @@ import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import cloudinary from '@/config/cloudinary'
 import { connectDB } from '@/config/database'
+import User from '@/models/user.model'
 import Property from '@/models/property.model'
 import { HydratedDocument, Types } from 'mongoose'
 import { getSessionUser } from '@/utils/getSessionUser'
 
-import type { IProperty } from '@/types'
+import type { IProperty, IUser } from '@/types'
 
 /**
  * Add Property Action
@@ -97,7 +98,7 @@ export async function addProperty(formData: FormData) {
 }
 
 /**
- * Update Property
+ * Update Property Action
  * @param formData
  */
 export async function updateProperty(formData: FormData) {
@@ -127,4 +128,44 @@ export async function updateProperty(formData: FormData) {
   redirect(`/properties/${property._id}`)
 }
 
-export async function bookmarkProperty() {}
+/**
+ * Bookmark Property Action
+ * @param propertyId
+ * @returns
+ */
+export async function bookmarkProperty(propertyId: string) {
+  const session = await getSessionUser()
+
+  if (!session || !session.user) throw new Error('Invalid session')
+
+  const { id } = session
+
+  await connectDB()
+
+  const user = await User.findById<HydratedDocument<IUser>>(id)
+
+  if (!user) throw new Error('Invalid user')
+
+  let message: string
+
+  const isBookmarked = user.bookmarks.includes(
+    Types.ObjectId.createFromHexString(propertyId)
+  )
+
+  if (isBookmarked) {
+    // @ts-ignore
+    user.bookmarks.pull(Types.ObjectId.createFromHexString(propertyId))
+    message = 'Bookmark removed'
+  } else {
+    user.bookmarks.push(Types.ObjectId.createFromHexString(propertyId))
+    message = 'Bookmark added'
+  }
+
+  await user.save()
+
+  revalidatePath('/properties/saved', 'page')
+
+  return {
+    message,
+  }
+}
