@@ -41,6 +41,7 @@ type IUser = {
 }
 
 type IMessage = {
+  _id?: string
   sender: Types.ObjectId
   recipient: Types.ObjectId
   property: Types.ObjectId
@@ -49,4 +50,6 @@ type IMessage = {
   phone?: string
   body?: string
   read?: boolean
+  createdAt?: string
+  updatedAt?: string
 }
