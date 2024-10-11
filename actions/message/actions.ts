@@ -109,3 +109,47 @@ export async function markMessageAsRead(prevState: any, formData: FormData) {
     }
   }
 }
+
+/**
+ * Delete Message Read Action
+ * @param prevState
+ * @param formData
+ * @returns
+ */
+export async function deleteMessage(prevState: any, formData: FormData) {
+  try {
+    // session helper function
+    const session = await getSessionUser()
+
+    if (!session || !session.user) throw new Error('User ID is required')
+
+    // session user id
+    const { id } = session
+
+    // connect to mongodb
+    await connectDB()
+
+    const messageId = formData.get('messageId')
+
+    const message = await Message.findById<HydratedDocument<IMessage>>(
+      messageId
+    )
+
+    if (!message) throw new Error('Message not found')
+
+    // verify ownership of message
+    if (message.recipient.toString() !== id) throw new Error('Unauthorized')
+
+    await message.deleteOne()
+
+    revalidatePath('/messages')
+
+    return {
+      message: 'Delete message',
+    }
+  } catch (error) {
+    return {
+      message: (error as Error).message,
+    }
+  }
+}
