@@ -1,9 +1,20 @@
 'use client'
 
-import { createContext, SetStateAction, useContext, useState } from 'react'
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+} from 'react'
 
 // create context
-const GlobalContext = createContext({})
+const GlobalContext = createContext<{
+  unreadCount: number
+  setUnreadCount?: Dispatch<SetStateAction<number>>
+}>({
+  unreadCount: 0,
+})
 
 // create context provider
 export function GlobalProvider({ children }: { children: React.ReactNode }) {
