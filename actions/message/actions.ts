@@ -153,3 +153,31 @@ export async function deleteMessage(prevState: any, formData: FormData) {
     }
   }
 }
+
+/**
+ * Get Unread Message Read Action
+ * @param prevState
+ * @param formData
+ * @returns
+ */
+export async function getUnreadMessageCount() {
+  // session helper function
+  const session = await getSessionUser()
+
+  if (!session || !session.user) throw new Error('User ID is required')
+
+  // session user id
+  const { id } = session
+
+  // connect to mongodb
+  await connectDB()
+
+  const count = await Message.countDocuments({
+    recipient: id,
+    read: false,
+  })
+
+  return {
+    count,
+  }
+}
