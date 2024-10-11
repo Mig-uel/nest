@@ -2,6 +2,7 @@ import '@/assets/styles/globals.css'
 import Footer from '@/components/footer/footer.component'
 import Navbar from '@/components/navbar/navbar.component'
 import AuthProvider from '@/components/providers/auth-provider.component'
+import { GlobalProvider } from '@/context/GlobalContext'
 import { ToastContainer } from 'react-toastify'
 
 import type { Metadata } from 'next'
@@ -16,14 +17,16 @@ export const metadata: Metadata = {
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthProvider>
-      <html>
-        <body>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-          <ToastContainer />
-        </body>
-      </html>
+      <GlobalProvider>
+        <html>
+          <body>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <ToastContainer />
+          </body>
+        </html>
+      </GlobalProvider>
     </AuthProvider>
   )
 }
