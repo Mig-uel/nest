@@ -59,11 +59,10 @@ const PropertyPage = async ({
           <div className='grid grid-cols-1 md:grid-cols-70/30 w-full gap-6'>
             <PropertyDetails {...property} />
             <aside className='space-y-4'>
-              {/* TODO: add functionality to buttons */}
               <PropertyBookmarkButton {...property} />
               <PropertyShareButtons {...property} />
 
-              {!isOwner && <PropertyContactForm {...property} />}
+              {!isOwner && session && <PropertyContactForm {...property} />}
             </aside>
           </div>
         </div>
