@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import type { IProperty } from '@/types'
+import Script from 'next/script'
 
 type LocationInfo = {
   lat: string
@@ -67,8 +68,30 @@ const PropertyMap = (location: IProperty['location']) => {
   if (loading) return <h3>Loading map...</h3>
 
   if (!locationInfo.length)
-    return <div className='text-xl'>No location data found</div>
+    return <div className='text-xl'>No location data </div>
 
-  return <div>PropertyMap</div>
+  return (
+    <>
+      <div id='map'></div>
+      <Script
+        src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+        type='module'
+        onLoad={() => {
+          var map = L.map('map').setView(
+            [locationInfo[0].lat, locationInfo[0].lon],
+            13
+          )
+          L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution:
+              '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          }).addTo(map)
+          L.marker([locationInfo[0].lat, locationInfo[0].lon])
+            .addTo(map)
+            .bindPopup(`${location.street}`)
+            .openPopup()
+        }}
+      ></Script>
+    </>
+  )
 }
 export default PropertyMap
