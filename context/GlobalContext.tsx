@@ -5,8 +5,11 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
+  useEffect,
   useState,
 } from 'react'
+import { useSession } from 'next-auth/react'
+import { getUnreadMessageCount } from '@/actions/message/actions'
 
 // create context
 const GlobalContext = createContext<{
@@ -19,6 +22,16 @@ const GlobalContext = createContext<{
 // create context provider
 export function GlobalProvider({ children }: { children: React.ReactNode }) {
   const [unreadCount, setUnreadCount] = useState(0)
+
+  const { data: session } = useSession()
+
+  useEffect(() => {
+    if (!session) return
+
+    getUnreadMessageCount().then((res) => {
+      if (res.count) setUnreadCount(res.count)
+    })
+  })
 
   return (
     <GlobalContext.Provider value={{ unreadCount, setUnreadCount }}>
