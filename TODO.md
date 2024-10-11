@@ -26,3 +26,7 @@
 ## PropertyMap.component.tsx
 
 - [ ] Implement a better map mechanism
+
+## Back Button
+
+- [ ] Improve back button functionality to go back to the previous page instead of the properties page always
