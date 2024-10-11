@@ -78,7 +78,7 @@ const PropertyMap = (location: IProperty['location']) => {
   if (loading) return <h3>Loading map...</h3>
 
   if (!locationInfo.length || !locationInfo)
-    return <div className='text-xl'>No location data </div>
+    return <div className='text-xl'>No location data available.</div>
 
   return (
     <MapContainer
