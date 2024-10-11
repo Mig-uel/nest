@@ -30,3 +30,10 @@
 ## Back Button
 
 - [ ] Improve back button functionality to go back to the previous page instead of the properties page always
+
+## General
+
+- [ ] Fix bugs
+- [ ] Improve performance
+- [ ] Improve accessibility
+- [ ] Enhance user experience
