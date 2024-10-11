@@ -7,6 +7,7 @@ import {
   FaTimes,
 } from 'react-icons/fa'
 import type { IProperty } from '@/types'
+import PropertyMap from './property-map.component'
 
 const PropertyDetails = ({
   type,
@@ -97,10 +98,10 @@ const PropertyDetails = ({
           ))}
         </ul>
       </div>
+
       {/* <!-- Map --> */}
-      {/* TODO: map */}
       <div className='bg-white p-6 rounded-lg shadow-md mt-6'>
-        <div id='map'></div>
+        <PropertyMap {...location} />
       </div>
     </main>
   )
