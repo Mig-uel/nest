@@ -5,11 +5,15 @@ import { revalidatePath } from 'next/cache'
 import cloudinary from '@/config/cloudinary'
 import { connectDB } from '@/config/database'
 import Property from '@/models/property.model'
-import { Types } from 'mongoose'
+import { HydratedDocument, Types } from 'mongoose'
 import { getSessionUser } from '@/utils/getSessionUser'
 
 import type { IProperty } from '@/types'
 
+/**
+ * Add Property Action
+ * @param formData
+ */
 export async function addProperty(formData: FormData) {
   // connect to mongodb
   await connectDB()
@@ -86,6 +90,37 @@ export async function addProperty(formData: FormData) {
   propertyObject.images = imageUrls
 
   const property = await Property.create(propertyObject)
+
+  revalidatePath('/', 'layout')
+
+  redirect(`/properties/${property._id}`)
+}
+
+/**
+ * Update Property
+ * @param formData
+ */
+export async function updateProperty(formData: FormData) {
+  const session = await getSessionUser()
+
+  if (!session || !session.user) throw new Error('Invalid session')
+
+  const { id } = session
+
+  await connectDB()
+
+  const property = await Property.findById<HydratedDocument<IProperty>>(
+    formData.get('propertyId')
+  )
+
+  if (!property) return redirect('/')
+
+  if (property.owner.toString() !== id) throw new Error('Unauthorized')
+
+  const propertyData = Object.fromEntries(formData)
+  const amenities = formData.getAll('amenities')
+
+  await property.updateOne({ ...propertyData, amenities })
 
   revalidatePath('/', 'layout')
 
