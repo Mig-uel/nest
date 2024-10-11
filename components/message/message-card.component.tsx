@@ -1,5 +1,6 @@
 'use client'
 
+import { useGlobalContext } from '@/context/GlobalContext'
 import { deleteMessage, markMessageAsRead } from '@/actions/message/actions'
 import type { IMessage } from '@/types'
 import { useEffect } from 'react'
@@ -7,6 +8,8 @@ import { useFormState } from 'react-dom'
 import { toast } from 'react-toastify'
 
 const MessageCard = ({ message }: { message: IMessage }) => {
+  const { setUnreadCount } = useGlobalContext()
+
   const [state, formAction] = useFormState(markMessageAsRead, {
     message: '',
   })
@@ -16,11 +19,17 @@ const MessageCard = ({ message }: { message: IMessage }) => {
   })
 
   useEffect(() => {
-    if (state.message) toast.success(state.message)
+    if (state.message) {
+      setUnreadCount!((prev) => (state.read ? prev - 1 : prev + 1))
+      toast.success(state.message)
+    }
   }, [state])
 
   useEffect(() => {
-    if (deleteState.message) toast.success(deleteState.message)
+    if (deleteState.message) {
+      setUnreadCount!((prev) => (message.read ? prev : prev - 1))
+      toast.success(deleteState.message)
+    }
   }, [deleteState])
 
   return (
