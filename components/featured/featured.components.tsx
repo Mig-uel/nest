@@ -1,24 +1,15 @@
-import Link from 'next/link'
 import { connectDB } from '@/config/database'
 import Property from '@/models/property.model'
 
 import PropertyCard from '../property/property-card.component'
 import type { IProperty } from '@/types'
 
-// TODO: separate featured and recent properties into their respective components
 const Featured = async () => {
   await connectDB()
 
   const featuredProperties = (await Property.find({
     is_featured: true,
   }).lean()) as IProperty[]
-
-  const recentProperties = (await Property.find({})
-    .sort({
-      createdAt: -1,
-    })
-    .limit(3)
-    .lean()) as IProperty[]
 
   return (
     <>
