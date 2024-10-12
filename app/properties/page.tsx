@@ -3,10 +3,20 @@ import Property from '@/models/property.model'
 import PropertyCard from '@/components/property/property-card.component'
 import { IProperty } from '@/types'
 
-const PropertiesPage = async () => {
+const PropertiesPage = async ({
+  searchParams: { page = 1, pageSize = 2 },
+}: {
+  searchParams: { page: number; pageSize: number }
+}) => {
   await connectDB()
 
-  const properties = (await Property.find({}).lean()) as IProperty[]
+  const skip = (page - 1) * pageSize
+  const total = await Property.estimatedDocumentCount({})
+
+  const properties = (await Property.find({})
+    .skip(skip)
+    .limit(pageSize)
+    .lean()) as IProperty[]
 
   return (
     <section className='px-4 py-6'>
