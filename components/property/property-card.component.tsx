@@ -56,14 +56,16 @@ const PropertyCard = ({
 
   return (
     <div className='rounded-xl shadow-md relative'>
-      <Image
-        src={imageSrc}
-        alt={name}
-        className='w-full h-auto rounded-t-xl'
-        width={0}
-        height={0}
-        sizes='100vw'
-      />
+      <Link href={`/properties/${_id}`}>
+        <Image
+          src={imageSrc}
+          alt={name}
+          className='w-full h-auto rounded-t-xl'
+          width={0}
+          height={0}
+          sizes='100vw'
+        />
+      </Link>
       <div className='p-4'>
         <div className='text-left md:text-center lg:text-left mb-6'>
           <div className='text-gray-600'>{type}</div>
