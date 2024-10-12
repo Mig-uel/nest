@@ -2,6 +2,7 @@ import { connectDB } from '@/config/database'
 import Property from '@/models/property.model'
 import PropertyCard from '@/components/property/property-card.component'
 import { IProperty } from '@/types'
+import Pagination from '@/components/pagination/pagination.component'
 
 const PropertiesPage = async ({
   searchParams: { page = 1, pageSize = 2 },
@@ -30,6 +31,7 @@ const PropertiesPage = async ({
             })}
           </div>
         )}
+        <Pagination page={+page} pageSize={+pageSize} totalItems={total} />
       </div>
     </section>
   )
