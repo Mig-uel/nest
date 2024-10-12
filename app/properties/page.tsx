@@ -5,7 +5,7 @@ import { IProperty } from '@/types'
 import Pagination from '@/components/pagination/pagination.component'
 
 const PropertiesPage = async ({
-  searchParams: { page = 1, pageSize = 2 },
+  searchParams: { page = 1, pageSize = 9 },
 }: {
   searchParams: { page: number; pageSize: number }
 }) => {
@@ -31,7 +31,9 @@ const PropertiesPage = async ({
             })}
           </div>
         )}
-        <Pagination page={+page} pageSize={+pageSize} totalItems={total} />
+        {total > pageSize && (
+          <Pagination page={+page} pageSize={+pageSize} totalItems={total} />
+        )}
       </div>
     </section>
   )
