@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify'
 
 import type { Metadata } from 'next'
 import 'react-toastify/dist/ReactToastify.css'
+import 'photoswipe/dist/photoswipe.css'
 
 export const metadata: Metadata = {
   title: 'Nest',
