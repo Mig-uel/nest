@@ -8,21 +8,10 @@ import type { IProperty } from '@/types'
 // TODO: separate featured and recent properties into their respective components
 const Featured = async () => {
   await connectDB()
-  const properties = (await Property.find({}).lean()) as IProperty[]
 
-  // return random property
-  const randomProperty = () => {
-    const randInt = Math.floor(Math.random() * properties.length)
-
-    return properties[randInt]
-  }
-
-  // TODO: implement better featured property mechanism
-  const featuredProperties: IProperty[] = [
-    randomProperty(),
-    randomProperty(),
-    randomProperty(),
-  ]
+  const featuredProperties = (await Property.find({
+    is_featured: true,
+  }).lean()) as IProperty[]
 
   const recentProperties = (await Property.find({})
     .sort({
@@ -38,8 +27,8 @@ const Featured = async () => {
           <h2 className='text-3xl font-bold text-blue-500 mb-6'>
             Featured Properties
           </h2>
-          {!properties.length ? (
-            <p>No properties available</p>
+          {!featuredProperties.length ? (
+            <p>No featured properties available</p>
           ) : (
             <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
               {featuredProperties.map((property) => (
@@ -47,30 +36,7 @@ const Featured = async () => {
               ))}
             </div>
           )}
-
-          <h2 className='text-3xl font-bold text-blue-500 mb-6 mt-10'>
-            Recent Properties
-          </h2>
-
-          {!recentProperties.length ? (
-            <p>No recent properties available</p>
-          ) : (
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-              {recentProperties.map((property) => (
-                <PropertyCard key={property.name} {...property} />
-              ))}
-            </div>
-          )}
         </div>
-      </section>
-
-      <section className='m-auto max-w-lg my-6 px-6'>
-        <Link
-          href='/properties'
-          className='block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700'
-        >
-          View All Properties
-        </Link>
       </section>
     </>
   )
